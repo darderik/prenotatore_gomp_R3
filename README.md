@@ -2,7 +2,7 @@
 Script per l'automazione delle prenotazioni dei corsi inclusi nel piano di studio della piattaforma GOMP di Uniroma3
 
 ## Requisiti
-Powershell 7
+Powershell 7: https://github.com/PowerShell/PowerShell/releases/download/v7.2.1/PowerShell-7.2.1-win-x64.msi
 
 ## Utilizzo
 1) Eseguire lo script Setup-Dep.ps1
