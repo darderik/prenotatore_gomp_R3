@@ -6,3 +6,15 @@ cd $HOME\Documents\PowerShell\Modules\Selenium\4.0.0
 .\Selenium-Binary-Updater.ps1 -Browser Chrome
 
 Set-Location $PSScriptRoot
+
+$TextContent = "{
+    ""username"": ""nom.cognome"",
+    ""password"": """",
+    ""corsi"": [
+        15,
+        14
+    ]
+}"
+
+New-Item -Path .\config.json -Force 
+Set-Content .\config.json $TextContent

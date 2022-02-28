@@ -33,7 +33,6 @@ foreach ($corso in $corsi) {
         Write-Host "In corso la prenotazione del corso nr. $corso" -ForegroundColor Green
         $cssSelector = "#studyPlanBody > tr:nth-child($corso)"
         $curPrenota = Get-SeElement -By CssSelector -Value $cssSelector
-        $browser
         if ($curPrenota) { 
             Invoke-SeClick -Action Click_JS -Element $curPrenota -Sleep 1
             $jsScript = Get-Content .\selezionaSlot.js -Encoding UTF8 -Raw
@@ -44,7 +43,7 @@ foreach ($corso in $corsi) {
                 $curData = [regex]::Replace($curData, "\s+", " ") 
                 $dataParsed = [Datetime]::ParseExact($curData, 'dd/MM/yyyy HH:mm', $null)
                 $giorniDiDifferenza = $dataParsed - $dataOggi
-                if ($giorniDiDifferenza.Days -lt 7) {
+                if ($giorniDiDifferenza.Days -lt 8) {
                     $cssSelectorCourse = "#slotListBody > tr:nth-child($($i+1))"
                     $prenotaCorsoClick = Get-SeElement -By CssSelector -value $cssSelectorCourse
                     $giaPrenotato = Get-SeElement -Element $prenotaCorsoClick -By ClassName "fa-trash-alt" -ErrorAction SilentlyContinue
