@@ -1,0 +1,17 @@
+installare powershell 7
+
+powershell:
+
+install-module Selenium -allowprerelease -Scope currentuser
+
+cd $HOME\Documents\PowerShell\Modules\Selenium\4.0.0
+.\Selenium-Binary-Updater.ps1 -Browser Chrome
+
+installare chrome
+
+configurare usando gli indici dei corsi 
+
+
+avvia aprendo powershell nella cartella
+
+.\prenotatore.ps1
