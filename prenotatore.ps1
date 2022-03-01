@@ -1,7 +1,7 @@
 Import-Module Selenium
 Set-Location $PSScriptRoot
 $Options = New-SeDriverOptions -Browser Chrome
-$Options.AddArgument("headless")
+#$Options.AddArgument("headless")
 $browser = Start-SeDriver -Browser Chrome -StartURL https://gomp.uniroma3.it/ -Options $Options
 $userBox = Get-SeElement -By CssSelector -Value "#userName"
 $pwdBox = Get-SeElement -By CssSelector -Value "#password"
@@ -10,7 +10,8 @@ $submitBtn = Get-SeElement -By CssSelector -Value "#loginButton"
 $config = Get-Content .\config.json | ConvertFrom-Json
 $uname = $config.username
 $pwd = $config.password
-$corsi = $config.corsi
+$lezioni = $config.lezioni
+$corso = $config.corso
 
 Invoke-SeKeys -Element $userBox $uname
 Invoke-SeKeys -Element $pwdBox $pwd
@@ -27,11 +28,22 @@ Write-Host "Loggato in gomp." -ForegroundColor Green
 
 Invoke-SeClick -Element $prenotaBtn -Sleep 1
 
+#Selezione del corso
+$CourseSelection = Get-SeElement -By ID -Value "select2-courseSelector-container"
+Invoke-SeJavascript -Script "arguments[0].scrollIntoView(true);" -ArgumentList $CourseSelection #Metti in vista
+Invoke-SeClick -Action Click -Element $CourseSelection
 
-foreach ($corso in $corsi) {
-    if ($corso -gt 0) {
-        Write-Host "In corso la prenotazione del corso nr. $corso" -ForegroundColor Green
-        $cssSelector = "#studyPlanBody > tr:nth-child($corso)"
+$Ricerca = Get-SeElement -By ClassName -Value "select2-search__field"
+Invoke-SeKeys -Element $Ricerca -Keys $corso #Nomecorso
+#Seleziona primo
+$ListaOpzioni = Get-SeElement -By ClassName -Value "select2-results__options"
+$Opzioni = Get-SeElement -Element $ListaOpzioni -By ClassName -Value "select2-results__option"
+Invoke-SeClick -Element $Opzioni[0]
+
+foreach ($lez in $lezioni) {
+    if ($lez -gt 0) {
+        Write-Host "In corso la prenotazione del corso nr. $lez" -ForegroundColor Green
+        $cssSelector = "#courseBody > tr:nth-child($lez)"
         $curPrenota = Get-SeElement -By CssSelector -Value $cssSelector
         if ($curPrenota) { 
             Invoke-SeClick -Action Click_JS -Element $curPrenota -Sleep 1

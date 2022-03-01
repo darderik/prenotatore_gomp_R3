@@ -10,7 +10,8 @@ Set-Location $PSScriptRoot
 $TextContent = "{
     ""username"": ""nom.cognome"",
     ""password"": """",
-    ""corsi"": [
+    ""corso"" : ""Ingegneria elettronica l-8"",
+    ""lezioni"": [
         15,
         14
     ]
