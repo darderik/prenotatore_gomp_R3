@@ -1,7 +1,7 @@
 Import-Module Selenium
 Set-Location $PSScriptRoot
 $Options = New-SeDriverOptions -Browser Chrome
-#$Options.AddArgument("headless")
+$Options.AddArgument("headless")
 $browser = Start-SeDriver -Browser Chrome -StartURL https://gomp.uniroma3.it/ -Options $Options
 $userBox = Get-SeElement -By CssSelector -Value "#userName"
 $pwdBox = Get-SeElement -By CssSelector -Value "#password"
@@ -60,7 +60,7 @@ foreach ($lez in $lezioni) {
                     $prenotaCorsoClick = Get-SeElement -By CssSelector -value $cssSelectorCourse
                     $giaPrenotato = Get-SeElement -Element $prenotaCorsoClick -By ClassName "fa-trash-alt" -ErrorAction SilentlyContinue
                     if (-not $giaPrenotato) {
-                        Write-Host "In corso la prenotazione della lezione del $dataParsed" -ForegroundColor Green
+                        Write-Host "In corso la prenotazione della lezione del $($dataParsed.ToString("dd/MM/y"))" -ForegroundColor Green
                         Invoke-SeClick -Element $prenotaCorsoClick -Sleep 0.5
                         $ConfirmBtn = Get-SeElement -By ID -Value "partialQuestionYesNoConfirmButton"
                         Invoke-SeClick -Element $ConfirmBtn -Sleep 1.5
