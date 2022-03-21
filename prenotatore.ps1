@@ -1,4 +1,7 @@
 Import-Module Selenium
+function FocusOnElement($elem) {
+    Invoke-SeJavascript -Script "arguments[0].scrollIntoView(true);" -ArgumentList $elem #Metti in vista
+}
 Set-Location $PSScriptRoot
 $Options = New-SeDriverOptions -Browser Chrome
 $Options.AddArgument("headless")
@@ -25,7 +28,7 @@ if (-not $prenotaBtn) {
     Exit 
 }
 Write-Host "Loggato in gomp." -ForegroundColor Green
-
+FocusOnElement($prenotaBtn);
 Invoke-SeClick -Element $prenotaBtn -Sleep 1
 
 #Selezione del corso
